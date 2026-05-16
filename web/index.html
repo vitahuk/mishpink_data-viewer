@@ -32,11 +32,17 @@
         </div>
       </div>
 
-      <div class="topbar-right">
+      <nav class="topbar-right" aria-label="Primary navigation">
+        <a class="btn btn-ghost topbar-link is-active" href="/" aria-current="page">App</a>
+        <a class="btn btn-ghost topbar-link" href="/guide/introduction">Guide</a>
+        <a class="btn btn-ghost topbar-link topbar-github-link" href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub">
+          <img class="github-icon" src="/static/github-mark.png" alt="" aria-hidden="true" onerror="this.style.display='none'" />
+          <span>Github</span>
+        </a>
         <button class="btn btn-ghost" id="logoutBtn" type="button" data-tooltip="Log out of the application">
           Logout
         </button>
-      </div>
+      </nav>
     </header>
     
     <div id="appMessage" class="app-message hidden" role="status" aria-live="polite"></div>
@@ -696,7 +702,7 @@
                   </label>
                   <label class="map-option-row" for="taskMapShowViewportRects">
                     <input id="taskMapShowViewportRects" type="checkbox" />
-                    <span>Display viewports</span>
+                    <span>Display viewports (on mouseover)</span>
                   </label>
                   <label class="map-option-row" for="taskMapShowAllViewportRects">
                     <input id="taskMapShowAllViewportRects" type="checkbox" />
@@ -936,7 +942,7 @@
               </label>
               <label class="map-option-row" for="mapShowViewportRects">
                 <input id="mapShowViewportRects" type="checkbox" />
-                <span>Display viewports</span>
+                <span>Display viewports (on mouseover)</span>
               </label>
               <label class="map-option-row" for="mapShowAllViewportRects">
                 <input id="mapShowAllViewportRects" type="checkbox" />

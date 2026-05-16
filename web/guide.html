@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Guide | MishPink Data Explorer</title>
+  <link rel="stylesheet" href="/static/styles.css?v=37" />
+</head>
+
+<body>
+  <div class="app guide-app">
+    <!-- HEADER -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="brand">
+          <span class="brand-dot"></span>
+          MishPink Data Explorer
+        </div>
+
+        <div class="breadcrumb" aria-label="Breadcrumb">
+          <a class="crumb crumb-link" href="/">Dashboard</a>
+          <span class="crumb-sep">›</span>
+          <span class="crumb crumb-current">Guide</span>
+          <span class="crumb-sep">›</span>
+          <span class="crumb muted" id="guideBreadcrumbTopic">Introduction</span>
+        </div>
+      </div>
+
+      <nav class="topbar-right" aria-label="Primary navigation">
+        <a class="btn btn-ghost topbar-link" href="/">App</a>
+        <a class="btn btn-ghost topbar-link is-active" href="/guide/introduction" aria-current="page">Guide</a>
+        <a class="btn btn-ghost topbar-link topbar-github-link" href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub">
+          <img class="github-icon" src="/static/github-mark.png" alt="" aria-hidden="true" onerror="this.style.display='none'" />
+          <span>Github</span>
+        </a>
+        <button class="btn btn-ghost" id="logoutBtn" type="button" data-tooltip="Log out of the application">
+          Logout
+        </button>
+      </nav>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main guide-main">
+      <aside class="card guide-sidebar" aria-label="Guide sections">
+        <div class="card-head">
+          <h2>Guide sections</h2>
+        </div>
+        <nav class="guide-nav" aria-label="Guide topics">
+          <a class="guide-nav-link" href="/guide/introduction" data-guide-link="introduction">
+            <span class="guide-nav-index">01</span>
+            <span>
+              <strong>Introduction</strong>
+              <small>What the app does</small>
+            </span>
+          </a>
+          <a class="guide-nav-link" href="/guide/upload" data-guide-link="upload">
+            <span class="guide-nav-index">02</span>
+            <span>
+              <strong>Upload Data</strong>
+              <small>CSV import workflow</small>
+            </span>
+          </a>
+          <a class="guide-nav-link" href="/guide/basic-usage" data-guide-link="basic-usage">
+            <span class="guide-nav-index">03</span>
+            <span>
+              <strong>Basic Usage</strong>
+              <small>Sessions, Groups, Metrics</small>
+            </span>
+          </a>
+          <a class="guide-nav-link" href="/guide/export" data-guide-link="export">
+            <span class="guide-nav-index">04</span>
+            <span>
+              <strong>Export</strong>
+              <small>Download data</small>
+            </span>
+          </a>
+        </nav>
+      </aside>
+
+      <article class="guide-content" id="guideContent" tabindex="-1"></article>
+    </main>
+  </div>
+
+  <!-- GLOBAL FOOTER -->
+  <footer class="app-footer" aria-label="Footer">
+    <div class="app-footer-content">
+      <p>MishPink Data Explorer, version 1.3 (April 2026)</p>
+      <p>Coded & Designed by Vítězslav Huk, idea by Lukáš Herman</p>
+      <a href="https://geogr.sci.muni.cz" target="_blank" rel="noopener noreferrer">Department of Geography, Masaryk University</a>
+      <img src="/static/sci-gu-lg-eng-white-01.png" alt="Dep. of Geography Logo" class="app-footer-logo" />
+    </div>
+  </footer>
+
+  <script>
+    const GUIDE_PAGES = {
+      "introduction": {
+        title: "Introduction",
+        kicker: "Start here",
+        summary: "MishPink Data Explorer helps you organize user experiments, upload MishPink CSV files, inspect participant behavior, evaluate answers, create groups, and export analysis-ready data.",
+        sections: [
+          {
+            heading: "How the application is organized",
+            body: "The Dashboard is the entry point. Each user experiment contains its uploaded sessions, optional correct answers and groups",
+            bullets: [
+              "Dashboard: create or select a user experiment and view high-level metrics.",
+              "Sessions: browse uploaded participants, filter them, and open detailed session views.",
+              "Tasks in sessions: view one participant's tasks and details.",
+              "Groups: create participant groups for comparison and group-level exports."
+            ]
+          },
+          {
+            heading: "Open source & Community",
+            body: "MishPink Data Explorer is open-source software licensed under GNU GPL v 3.0. It was created as part of a master's thesis at Masaryk University. The project is open to contributions, feedback, and collaboration.",
+            bullets: [
+              "Source code is available on GitHub.",
+            ]
+          }
+        ]
+      },
+      "upload": {
+        title: "Upload Data",
+        kicker: "Import CSV files",
+        summary: "Use the dashboard upload MishPink CSV files into a selected user experiment.",
+        sections: [
+          {
+            heading: "Prepare a user experiment",
+            body: "Open the dashboard, create a new user experiment, or select an existing one. Uploads are always stored under the selected experiment.",
+            bullets: [
+              "Use + Add user experiment on the dashboard.",
+              "Name the user experiment.",
+            ]
+          },
+          {
+            heading: "Upload MishPink CSV file",
+            body: "Click Upload data on an experiment card. The app validates file type and neccessary columns, then shows upload progress and status messages.",
+            bullets: [
+              "The CSV file has to be formated as a MishPink export. It has to contain at least these columns: userId, timestamp, event_name, event_detail, task",
+              "If validation fails, check whether your CSV contains requested columns."
+            ]
+          },
+          {
+            heading: "Settings and answer management",
+            id: "settings",
+            body: "Settings are tied to a specific user experiment.",
+            bullets: [
+              "Correct answers are saved automatically. You can set correct answers after uploading sessions.",
+              "The Edit uploaded sessions tab helps you remove wrong or duplicate sessions.",
+              "Use User experiment settings to rename or delete an experiment when needed."
+            ]
+          },
+        ]
+      },
+      "basic-usage": {
+        title: "Basic Usage",
+        kicker: "Work with sessions",
+        summary: "After data is uploaded, use individual or group metrics to review the participant's behaviour.",
+        sections: [
+          {
+            heading: "Sessions detail",
+            id: "sessions",
+            body: "Open a user experiment to see its Sessions page. You can filter sessions, open session details, inspect task metrics, display event timelines, and work with spatial data.",
+            bullets: [
+                "Use checkbox selection for creating a new group. Highlight shows the session's metrics in the right-site panel.",
+                "Use filters to narrow sessions by different attributes.",
+                "Open a session detail to inspect individual tasks, movement, interactions, answers, and spatial data.",
+                "Use the breadcrumb to return from details back to the experiment-level session list."
+            ]
+          },
+          
+          {
+            heading: "Groups",
+            id: "groups",
+            body: "Groups let you compare subsets of sessions inside the same experiment. Create a group from selected sessions, edit membership, and then use group-level metrics and exports.",
+            bullets: [
+              "Use checkbox selection to select groups for comparison - then compare then using the Groups detail button. Highlight shows the group's metrics in the right-site panel.",
+              "Edit highlighted session using the Edit group button. Use flags to select candidates for removal, then remove them in bulk.",
+            ]
+          }
+        ]
+      },
+      "export": {
+        title: "Export",
+        kicker: "Download data",
+        summary: "Export tools are available at experiment, group, and individual-session level.",
+        sections: [
+          {
+            heading: "Experiment-level exports",
+            body: "From an opened experiment, use the Export user experiment data button to download all sessions for that experiment.",
+          },
+          {
+            heading: "Group exports",
+            id: "group-export",
+            body: "Group export downloads only sessions that belong to the selected group. Use this after building cohorts or cleaning participant lists.",
+          },
+          {
+            heading: "Session exports",
+            body: "Open a session to export detailed session data, events, and spatial traces for a single user.",
+          }
+        ]
+      }
+    };
+
+    const GUIDE_ALIASES = {
+      "": "introduction",
+      "guide": "introduction",
+      "upload-data": "upload",
+      "basic": "basic-usage",
+      "usage": "basic-usage"
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function getGuidePageKey() {
+      const parts = String(window.location.pathname || "").split("/").filter(Boolean);
+      const raw = parts[0] === "guide" ? (parts[1] || "introduction") : "introduction";
+      const normalized = GUIDE_ALIASES[raw] || raw;
+      return GUIDE_PAGES[normalized] ? normalized : "introduction";
+    }
+
+    function renderGuidePage() {
+      const key = getGuidePageKey();
+      const page = GUIDE_PAGES[key];
+      const contentEl = document.getElementById("guideContent");
+      const breadcrumbTopicEl = document.getElementById("guideBreadcrumbTopic");
+      if (!contentEl || !page) return;
+
+      document.title = `${page.title} Guide | MishPink Data Explorer`;
+      if (breadcrumbTopicEl) breadcrumbTopicEl.textContent = page.title;
+
+      document.querySelectorAll("[data-guide-link]").forEach((link) => {
+        const isActive = link.getAttribute("data-guide-link") === key;
+        link.classList.toggle("is-active", isActive);
+        if (isActive) link.setAttribute("aria-current", "page");
+        else link.removeAttribute("aria-current");
+      });
+
+      const sectionsHtml = page.sections.map((section) => {
+        const actionsHtml = (section.actions || []).map((action) => (
+          `<a class="btn btn-ghost" href="${escapeHtml(action.href)}">${escapeHtml(action.label)}</a>`
+        )).join("");
+        const bulletsHtml = section.bullets?.length
+          ? `<ul class="guide-list">${section.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+          : "";
+        const idAttr = section.id ? ` id="${escapeHtml(section.id)}"` : "";
+        return `
+          <section class="card guide-card"${idAttr}>
+            <div class="card-head">
+              <h2>${escapeHtml(section.heading)}</h2>
+              <p class="muted">${escapeHtml(section.body)}</p>
+            </div>
+            ${bulletsHtml}
+            ${actionsHtml ? `<div class="guide-actions">${actionsHtml}</div>` : ""}
+          </section>
+        `;
+      }).join("");
+
+      contentEl.innerHTML = `
+        <section class="page-head guide-hero">
+          <div>
+            <div class="guide-kicker">${escapeHtml(page.kicker)}</div>
+            <h1>${escapeHtml(page.title)}</h1>
+            <p class="muted">${escapeHtml(page.summary)}</p>
+          </div>
+          <div class="page-actions">
+            <a class="btn" href="/">Open App</a>
+            <a class="btn btn-ghost" href="/guide/introduction">Guide Home</a>
+          </div>
+        </section>
+        ${sectionsHtml}
+      `;
+
+      const hashTarget = window.location.hash ? document.getElementById(window.location.hash.slice(1)) : null;
+      if (hashTarget) {
+        requestAnimationFrame(() => hashTarget.scrollIntoView({ block: "start" }));
+      }
+    }
+
+    async function logout() {
+      const btn = document.getElementById("logoutBtn");
+      const originalLabel = btn?.textContent;
+      try {
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = "Logging out…";
+        }
+        await fetch("/api/auth/logout", { method: "POST" });
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = originalLabel || "Logout";
+        }
+        window.location.replace("/login");
+      }
+    }
+
+    document.getElementById("logoutBtn")?.addEventListener("click", logout);
+    renderGuidePage();
+  </script>
+</body>
+
+</html>

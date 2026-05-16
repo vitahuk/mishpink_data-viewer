@@ -5237,7 +5237,7 @@ function renderGroupCompareBoxplotTab(groups) {
       <span><span class="boxplot-legend-mark box"></span>Box (Q1–Q3)</span>
       <span><span class="boxplot-legend-mark median"></span>Median</span>
       <span><span class="boxplot-legend-mark whisker"></span>Whiskers</span>
-      <span><span class="boxplot-legend-mark average"></span>Average</span>
+      <span><span class="boxplot-legend-mark average"></span>Mean</span>
       <span><span class="boxplot-legend-mark outlier"></span>Outliers</span>
     </div>
     <div class="group-boxplot-grid">

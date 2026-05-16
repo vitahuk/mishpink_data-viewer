@@ -186,6 +186,16 @@ def login_page(request: Request):
     return FileResponse(str(WEB_DIR / "login.html"))
 
 
+@app.get("/guide")
+def guide_index():
+    return RedirectResponse(url="/guide/introduction", status_code=303)
+
+
+@app.get("/guide/{guide_page:path}")
+def guide_page(guide_page: str):
+    return FileResponse(str(WEB_DIR / "guide.html"))
+
+
 @app.get("/api/auth/me")
 def auth_me(request: Request):
     if not _is_authenticated(request):

@@ -33,7 +33,7 @@
               aria-label="Show password"
               aria-pressed="false"
               title="Show password"
-            >Zobrazit heslo</button>
+            >Show password</button>
           </div>
         </label>
         <button id="loginBtn" class="btn login-btn" type="submit">Login</button>
@@ -124,7 +124,7 @@
       toggleBtn.setAttribute("aria-pressed", String(shouldShowPassword));
       toggleBtn.setAttribute("aria-label", shouldShowPassword ? "Hide password" : "Show password");
       toggleBtn.setAttribute("title", shouldShowPassword ? "Hide password" : "Show password");
-      toggleBtn.textContent = shouldShowPassword ? "Skrýt heslo" : "Zobrazit heslo";
+      toggleBtn.textContent = shouldShowPassword ? "Hide password" : "Show password";
     });
     redirectIfAuthenticated();
   </script>
