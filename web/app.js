@@ -3064,7 +3064,7 @@ function syncTaskMapLegend() {
   }
   if (endpointSwatch) endpointSwatch.style.opacity = controls.showEndpoints ? "1" : ".35";
   if (endpointSwatch) endpointSwatch.style.background = controls.endpointColor;
-  if (viewportSwatch) viewportSwatch.style.opacity = (controls.showViewportRects && state.taskMap.viewportRectangles.length > 0) ? "1" : ".35";
+  if (viewportSwatch) viewportSwatch.style.opacity = ((controls.showViewportRects || controls.showAllViewportRects) && state.taskMap.viewportRectangles.length > 0) ? "1" : ".35";
 }
 
 function applyTaskMapLayerStyles() {
@@ -3074,12 +3074,7 @@ function applyTaskMapLayerStyles() {
   const trajectoryPointsLayer = state.taskMap.trajectoryPointsLayer;
   const endpointLayer = state.taskMap.endpointLayer;
   const viewportLayer = state.taskMap.viewportLayer;
-  const showAllEl = $("#taskMapShowAllViewportRects");
-  if (showAllEl) {
-    showAllEl.disabled = !controls.showViewportRects;
-    if (!controls.showViewportRects) showAllEl.checked = false;
-  }
-
+  
   if (pointsLayer?.setStyle) {
     pointsLayer.setStyle({ color: controls.pointsColor, fillColor: controls.pointsColor, fillOpacity: 0.9, radius: 6, weight: 1 });
   }
@@ -3116,8 +3111,9 @@ function applyTaskMapLayerStyles() {
   }
   if (map && viewportLayer) {
     const hasLayer = map.hasLayer(viewportLayer);
-    if (controls.showViewportRects && !hasLayer) map.addLayer(viewportLayer);
-    if (!controls.showViewportRects && hasLayer) map.removeLayer(viewportLayer);
+    const shouldShowViewportLayer = controls.showViewportRects || controls.showAllViewportRects;
+    if (shouldShowViewportLayer && !hasLayer) map.addLayer(viewportLayer);
+    if (!shouldShowViewportLayer && hasLayer) map.removeLayer(viewportLayer);
   }
 
   updateViewportRectanglesVisibility(state.taskMap, controls);
@@ -3135,7 +3131,7 @@ function updateViewportRectanglesVisibility(mapState, controls) {
   const rectangles = Array.isArray(mapState?.viewportRectangles) ? mapState.viewportRectangles : [];
   rectangles.forEach((rect) => {
     if (!rect) return;
-    const isVisible = Boolean(controls?.showViewportRects) && Boolean(controls?.showAllViewportRects || rect.__isHovered);
+    const isVisible = Boolean(controls?.showAllViewportRects) || (Boolean(controls?.showViewportRects) && Boolean(rect.__isHovered));
     const style = { opacity: isVisible ? 0.95 : 0, fillOpacity: isVisible ? 0.1 : 0 };
     if (rect.setStyle) {
       rect.setStyle(style);
@@ -4313,7 +4309,7 @@ function syncMapLegend() {
     endpointSwatch.style.opacity = controls.showEndpoints ? "1" : ".35";
   }
   if (viewportSwatch) {
-    viewportSwatch.style.opacity = (controls.showViewportRects && state.map.viewportRectangles.length > 0) ? "1" : ".35";
+    viewportSwatch.style.opacity = ((controls.showViewportRects || controls.showAllViewportRects) && state.map.viewportRectangles.length > 0) ? "1" : ".35";
   }
 }
 
@@ -4324,12 +4320,7 @@ function applyMapLayerStyles() {
   const trajectoryPointsLayer = state.map.trajectoryPointsLayer;
   const endpointLayer = state.map.endpointLayer;
   const viewportLayer = state.map.viewportLayer;
-  const showAllEl = $("#mapShowAllViewportRects");
-  if (showAllEl) {
-    showAllEl.disabled = !controls.showViewportRects;
-    if (!controls.showViewportRects) showAllEl.checked = false;
-  }
-
+  
   if (pointsLayer?.setStyle) {
     pointsLayer.setStyle({
       color: controls.pointsColor,
@@ -4395,8 +4386,9 @@ function applyMapLayerStyles() {
 
   if (map && viewportLayer) {
     const hasLayer = map.hasLayer(viewportLayer);
-    if (controls.showViewportRects && !hasLayer) map.addLayer(viewportLayer);
-    if (!controls.showViewportRects && hasLayer) map.removeLayer(viewportLayer);
+    const shouldShowViewportLayer = controls.showViewportRects || controls.showAllViewportRects;
+    if (shouldShowViewportLayer && !hasLayer) map.addLayer(viewportLayer);
+    if (!shouldShowViewportLayer && hasLayer) map.removeLayer(viewportLayer);
   }
 
   updateViewportRectanglesVisibility(state.map, controls);
@@ -5237,7 +5229,7 @@ function renderGroupCompareBoxplotTab(groups) {
       <span><span class="boxplot-legend-mark box"></span>Box (Q1–Q3)</span>
       <span><span class="boxplot-legend-mark median"></span>Median</span>
       <span><span class="boxplot-legend-mark whisker"></span>Whiskers</span>
-      <span><span class="boxplot-legend-mark average"></span>Mean</span>
+      <span><span class="boxplot-legend-mark mean"></span>Mean</span>
       <span><span class="boxplot-legend-mark outlier"></span>Outliers</span>
     </div>
     <div class="group-boxplot-grid">
@@ -5282,8 +5274,8 @@ function renderGroupCompareBoxplotTab(groups) {
                 <line x1="${cx}" y1="${yHigh}" x2="${cx}" y2="${yLow}" stroke="transparent" stroke-width="18" class="boxplot-hover-target" data-group="${escapeHtml(item.name)}" data-metric="Whisker range" data-value="${escapeHtml(`${fmtMs(item.stats.whiskerLow)} to ${fmtMs(item.stats.whiskerHigh)}`)}" data-extra="Lower whisker: ${escapeHtml(fmtMs(item.stats.whiskerLow))}, upper whisker ${escapeHtml(fmtMs(item.stats.whiskerHigh))}" data-plot-x="${cx}" data-plot-y="${(yLow + yHigh) / 2}" />
 
                 <line x1="${cx - 8}" y1="${yAverage - 8}" x2="${cx + 8}" y2="${yAverage + 8}" stroke="#0f172a" stroke-width="2" class="boxplot-hover-target" data-group="${escapeHtml(item.name)}" data-metric="Average" data-value="${escapeHtml(fmtMs(item.stats.average))}" data-plot-x="${cx}" data-plot-y="${yAverage}" />
-                <line x1="${cx - 8}" y1="${yAverage + 8}" x2="${cx + 8}" y2="${yAverage - 8}" stroke="#0f172a" stroke-width="2" class="boxplot-hover-target" data-group="${escapeHtml(item.name)}" data-metric="Average" data-value="${escapeHtml(fmtMs(item.stats.average))}" data-plot-x="${cx}" data-plot-y="${yAverage}" />
-
+                <line x1="${cx - 8}" y1="${yAverage + 8}" x2="${cx + 8}" y2="${yAverage - 8}" stroke="#0f172a" stroke-width="2" class="boxplot-hover-target" data-group="${escapeHtml(item.name)}" data-metric="Average" data-value="${escapeHtml(fmtMs(item.stats.average))}" data-plot-x="${cx}" data-plot-y="${yAverage}" />    
+                
                 ${item.stats.outliers.map((val, outIdx) => {
                   const outX = cx + ((outIdx % 2 === 0 ? -1 : 1) * (10 + ((outIdx % 3) * 6)));
                   const outY = valueToY(val);

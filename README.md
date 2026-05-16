@@ -36,8 +36,8 @@ This application operates on a shared live database.
 Please use the application with caution, especially in multi-user scenarios.
 
 ## Notes
-- This application is a research prototype and not intended as a production system  
-- Supported data format corresponds to MishPink exports only
+- This application is a research prototype and not intended as a production system.  
+- Supported data format corresponds to MishPink exports only.
 
 ## Author
 Vítězslav Huk (Masaryk University)

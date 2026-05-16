@@ -11,12 +11,3 @@ data/uploads/
 # OS
 .DS_Store
 
-# TXT
-server_spusteni.txt
-dalsi_postup.txt
-readme_heslo.txt
-updaty.txt
-
-tests/
-
-

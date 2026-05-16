@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Guide | MishPink Data Explorer</title>
-  <link rel="stylesheet" href="/static/styles.css?v=37" />
+  <link rel="stylesheet" href="/static/styles.css?v=2" />
 </head>
 
 <body>
@@ -19,24 +19,21 @@
         </div>
 
         <div class="breadcrumb" aria-label="Breadcrumb">
-          <a class="crumb crumb-link" href="/">Dashboard</a>
+          <a class="crumb crumb-btn crumb-link" href="/guide/introduction">Guide</a>
           <span class="crumb-sep">›</span>
-          <span class="crumb crumb-current">Guide</span>
-          <span class="crumb-sep">›</span>
-          <span class="crumb muted" id="guideBreadcrumbTopic">Introduction</span>
+          <button class="crumb crumb-btn crumb-current" id="guideBreadcrumbTopic" type="button" disabled>Introduction</button>
         </div>
       </div>
 
       <nav class="topbar-right" aria-label="Primary navigation">
         <a class="btn btn-ghost topbar-link" href="/">App</a>
         <a class="btn btn-ghost topbar-link is-active" href="/guide/introduction" aria-current="page">Guide</a>
-        <a class="btn btn-ghost topbar-link topbar-github-link" href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub">
-          <img class="github-icon" src="/static/github-mark.png" alt="" aria-hidden="true" onerror="this.style.display='none'" />
-          <span>Github</span>
-        </a>
-        <button class="btn btn-ghost" id="logoutBtn" type="button" data-tooltip="Log out of the application">
+        <button class="btn btn-ghost topbar-link" id="logoutBtn" type="button" data-tooltip="Log out of the application">
           Logout
         </button>
+        <a class="btn btn-ghost topbar-link topbar-github-link" href="https://github.com/vitahuk/mishpink_data-explorer" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub">
+          <img class="github-icon" src="/static/github-mark.png" width="22" height="22" alt="" aria-hidden="true" onerror="this.style.display='none'" />
+        </a>
       </nav>
     </header>
 
@@ -82,10 +79,9 @@
     </main>
   </div>
 
-  <!-- GLOBAL FOOTER -->
   <footer class="app-footer" aria-label="Footer">
     <div class="app-footer-content">
-      <p>MishPink Data Explorer, version 1.3 (April 2026)</p>
+      <p>MishPink Data Explorer, version 1.3.2 (May 2026)</p>
       <p>Coded & Designed by Vítězslav Huk, idea by Lukáš Herman</p>
       <a href="https://geogr.sci.muni.cz" target="_blank" rel="noopener noreferrer">Department of Geography, Masaryk University</a>
       <img src="/static/sci-gu-lg-eng-white-01.png" alt="Dep. of Geography Logo" class="app-footer-logo" />
@@ -97,23 +93,23 @@
       "introduction": {
         title: "Introduction",
         kicker: "Start here",
-        summary: "MishPink Data Explorer helps you organize user experiments, upload MishPink CSV files, inspect participant behavior, evaluate answers, create groups, and export analysis-ready data.",
+        summary: "MishPink Data Explorer helps analyse MishPink-specific interaction data. It computes metrics, creates visualizations, and exports data for further analysis.",
         sections: [
           {
             heading: "How the application is organized",
-            body: "The Dashboard is the entry point. Each user experiment contains its uploaded sessions, optional correct answers and groups",
+            body: "The Dashboard is the entry point. Each user experiment contains its uploaded sessions, optional correct answers and groups.",
             bullets: [
               "Dashboard: create or select a user experiment and view high-level metrics.",
-              "Sessions: browse uploaded participants, filter them, and open detailed session views.",
-              "Tasks in sessions: view one participant's tasks and details.",
+              "Sessions: browse uploaded sessions, filter them, and open detailed session-level views.",
+              "Tasks in sessions: view one sessions's tasks and details.",
               "Groups: create participant groups for comparison and group-level exports."
             ]
           },
           {
             heading: "Open source & Community",
-            body: "MishPink Data Explorer is open-source software licensed under GNU GPL v 3.0. It was created as part of a master's thesis at Masaryk University. The project is open to contributions, feedback, and collaboration.",
+            body: "MishPink Data Explorer is open-source software licensed under GNU GPL v 3.0. It was created as part of a master's thesis at Masaryk University in 2026. The project is open to contributions and feedback.",
             bullets: [
-              "Source code is available on GitHub.",
+              { text: "Source code is available on ", linkText: "GitHub", href: "https://github.com/vitahuk/mishpink_data-explorer", suffix: "." },
             ]
           }
         ]
@@ -121,7 +117,7 @@
       "upload": {
         title: "Upload Data",
         kicker: "Import CSV files",
-        summary: "Use the dashboard upload MishPink CSV files into a selected user experiment.",
+        summary: "Use the dashboard to upload MishPink CSV files into a selected user experiment.",
         sections: [
           {
             heading: "Prepare a user experiment",
@@ -135,7 +131,7 @@
             heading: "Upload MishPink CSV file",
             body: "Click Upload data on an experiment card. The app validates file type and neccessary columns, then shows upload progress and status messages.",
             bullets: [
-              "The CSV file has to be formated as a MishPink export. It has to contain at least these columns: userId, timestamp, event_name, event_detail, task",
+              "The CSV file has to be formated as a MishPink export. It has to contain at least these columns: userId, timestamp, event_name, event_detail, task.",
               "If validation fails, check whether your CSV contains requested columns."
             ]
           },
@@ -182,19 +178,19 @@
       "export": {
         title: "Export",
         kicker: "Download data",
-        summary: "Export tools are available at experiment, group, and individual-session level.",
+        summary: "Export tools are available at experiment, group, and individual-session level. You can download CSV files with raw data, GazePlotter CSVs or spatial data in GeoJSON format.",
         sections: [
           {
             heading: "Experiment-level exports",
             body: "From an opened experiment, use the Export user experiment data button to download all sessions for that experiment.",
           },
           {
-            heading: "Group exports",
+            heading: "Group-level exports",
             id: "group-export",
-            body: "Group export downloads only sessions that belong to the selected group. Use this after building cohorts or cleaning participant lists.",
+            body: "Group export downloads only sessions that belong to the selected group.",
           },
           {
-            heading: "Session exports",
+            heading: "Session-level exports",
             body: "Open a session to export detailed session data, events, and spatial traces for a single user.",
           }
         ]
@@ -216,6 +212,16 @@
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
+    }
+
+    function renderGuideBullet(item) {
+      if (typeof item === "string") return escapeHtml(item);
+      const text = escapeHtml(item?.text ?? "");
+      const linkText = escapeHtml(item?.linkText ?? "");
+      const href = escapeHtml(item?.href ?? "#");
+      const suffix = escapeHtml(item?.suffix ?? "");
+      if (!linkText) return text + suffix;
+      return `${text}<a class="guide-inline-link" href="${href}" target="_blank" rel="noopener noreferrer">${linkText}</a>${suffix}`;
     }
 
     function getGuidePageKey() {
@@ -247,7 +253,7 @@
           `<a class="btn btn-ghost" href="${escapeHtml(action.href)}">${escapeHtml(action.label)}</a>`
         )).join("");
         const bulletsHtml = section.bullets?.length
-          ? `<ul class="guide-list">${section.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+          ? `<ul class="guide-list">${section.bullets.map((item) => `<li>${renderGuideBullet(item)}</li>`).join("")}</ul>`
           : "";
         const idAttr = section.id ? ` id="${escapeHtml(section.id)}"` : "";
         return `
@@ -268,10 +274,6 @@
             <div class="guide-kicker">${escapeHtml(page.kicker)}</div>
             <h1>${escapeHtml(page.title)}</h1>
             <p class="muted">${escapeHtml(page.summary)}</p>
-          </div>
-          <div class="page-actions">
-            <a class="btn" href="/">Open App</a>
-            <a class="btn btn-ghost" href="/guide/introduction">Guide Home</a>
           </div>
         </section>
         ${sectionsHtml}

@@ -1284,10 +1284,38 @@ p {
 }
 
 .boxplot-legend-mark.whisker {
-  width: 3px;
-  height: 14px;
-  border-radius: 999px;
+  position: relative;
+  width: 18px;
+  height: 16px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.boxplot-legend-mark.whisker::before,
+.boxplot-legend-mark.whisker::after {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  height: 2px;
   background: #334155;
+  border-radius: 999px;
+}
+
+.boxplot-legend-mark.whisker::before {
+  top: 2px;
+  box-shadow: 0 10px 0 #334155;
+}
+
+.boxplot-legend-mark.whisker::after {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: auto;
+  width: 2px;
+  height: auto;
+  transform: translateX(-50%);
 }
 
 .boxplot-legend-mark.average {
@@ -2065,17 +2093,44 @@ p {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   line-height: 1;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  padding: 8px 6px;
+}
+
+.topbar-link:hover {
+  border-color: transparent;
+  background: transparent;
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .topbar-link.is-active {
-  border-color: rgba(106, 166, 255, .85);
-  background: rgba(106, 166, 255, .2);
+  border-color: transparent;
+  background: transparent;
+  color: var(--accent2);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .topbar-github-link {
-  padding: 8px 10px;
+  border-left: 1px solid rgba(168, 179, 204, .28);
+  border-radius: 0;
+  margin-left: 6px;
+  padding: 6px 0 6px 16px;
+}
+
+.topbar-github-link:hover {
+  text-decoration: none;
 }
 
 .github-icon {
@@ -2190,6 +2245,17 @@ p {
 
 .guide-list li::marker {
   color: var(--accent2);
+}
+
+.guide-inline-link {
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.guide-inline-link:hover {
+  color: #fff;
 }
 
 .guide-actions {
